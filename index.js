@@ -13,9 +13,9 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            // "https://cure-medix.web.app",
-            // "https://cure-medix.firebaseapp.com",
-            // "https://cure-medix-by-hafiz-al-shams1917.netlify.app",
+            "https://faztudo-8a1ba.web.app",
+            "https://faztudo-8a1ba.firebaseapp.com",
+            "https://faztudo-6c7cd4.netlify.app",
         ],
         credentials: true,
     })
