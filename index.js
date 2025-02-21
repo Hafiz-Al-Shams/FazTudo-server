@@ -9,17 +9,18 @@ const port = process.env.PORT || 5000;
 
 
 // middleware
-app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            "https://faztudo-8a1ba.web.app",
-            "https://faztudo-8a1ba.firebaseapp.com",
-            "https://faztudo-6c7cd4.netlify.app",
-        ],
-        credentials: true,
-    })
-);
+// app.use(
+//     cors({
+//         origin: [
+//             "http://localhost:5173",
+//             "https://faztudo-8a1ba.web.app",
+//             "https://faztudo-8a1ba.firebaseapp.com",
+//             "https://faztudo-6c7cd4.netlify.app",
+//         ],
+//         // credentials: true,
+//     })
+// );
+app.use(cors());
 app.use(express.json());
 
 
@@ -63,7 +64,7 @@ async function run() {
 
 
         app.post('/users', async (req, res) => {
-            console.log('click successful');
+            // console.log('click successful');
             const user = req.body;
             const query = { email: user.email }
             const existingUser = await userCollection.findOne(query);
