@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -50,6 +50,7 @@ async function run() {
 
 
         const userCollection = client.db("fazTudoDB").collection("users");
+        const taskCollection = client.db("fazTudoDB").collection("tasks");
 
 
 
@@ -74,6 +75,39 @@ async function run() {
             const result = await userCollection.insertOne(user);
             res.send(result);
         });
+
+
+
+
+        // task related APIs
+        app.get('/tasks', async (req, res) => {
+            const result = await taskCollection.find().toArray();
+            res.send(result);
+        });
+
+
+        app.post('/tasks', async (req, res) => {
+            // console.log('click successful');
+            const newTask = req.body;
+            const result = await taskCollection.insertOne(newTask);
+            res.send(result);
+        });
+
+
+        // new code1
+        app.patch('/tasks/:id', async (req, res) => {
+            const taskId = req.params.id;
+            const { category } = req.body;
+
+            const filter = { _id: new ObjectId(taskId) };
+            const updateDoc = {
+                $set: { category: category },
+            };
+
+            const result = await taskCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        });
+
 
 
 
