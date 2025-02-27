@@ -86,6 +86,14 @@ async function run() {
         });
 
 
+        app.get('/tasks/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await taskCollection.findOne(query);
+            res.send(result);
+        });
+
+
         app.post('/tasks', async (req, res) => {
             // console.log('click successful');
             const newTask = req.body;
@@ -109,7 +117,29 @@ async function run() {
         });
 
 
+        app.patch('/update-task/:id', async (req, res) => {
+            const newTask = req.body;
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const updatedDoc = {
+                $set: {
+                    title: newTask.title,
+                    description: newTask.description,
+                    category: newTask.category,
+                }
+            }
 
+            const result = await taskCollection.updateOne(filter, updatedDoc)
+            res.send(result);
+        });
+
+
+        app.delete('/tasks/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await taskCollection.deleteOne(query);
+            res.send(result);
+        });
 
 
 
@@ -153,10 +183,10 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('FazTudo server is working!')
+    res.send('TudoSpeedo server is working!')
 });
 
 
 app.listen(port, () => {
-    console.log(`FazTudo server is doing work on PORT: ${port}`)
+    console.log(`TudoSpeedo server is doing work on PORT: ${port}`)
 });
