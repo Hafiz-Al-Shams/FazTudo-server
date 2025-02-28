@@ -86,6 +86,20 @@ async function run() {
         });
 
 
+        // new code for email query
+        // app.get('/tasks', async (req, res) => {
+        //     const email = req.query.email;  // Getting email from query params
+        //     if (!email) {
+        //         return res.status(400).send({ message: "Email query is required" });
+        //     }
+
+        //     const query = { user: email };
+        //     const result = await taskCollection.find(query).toArray();
+        //     res.send(result);
+        // });
+
+
+
         app.get('/tasks/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
